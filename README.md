@@ -1,3 +1,5 @@
 # IEEE-Discord-Bot
-UCF IEEE Discord Bot being created and documented here
-(WIP)
+Commands:
+- help: displays help menu
+- ping: pongs your ping
+- role: adds and removes roles

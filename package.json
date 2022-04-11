@@ -1,0 +1,22 @@
+{
+  "name": "ieee-discord-bot",
+  "version": "1.0.0",
+  "description": "UCF IEEE Discord Bot being created and documented here\r (WIP)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethanpartidas/IEEE-Discord-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethanpartidas/IEEE-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/ethanpartidas/IEEE-Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
