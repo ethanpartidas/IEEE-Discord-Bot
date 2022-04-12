@@ -21,6 +21,7 @@ client.once('ready', () => {
 	console.log('Chanos is online.');
 });
 
+// process command
 client.on('messageCreate', message => {
 	const prefix = '!';
 
@@ -32,6 +33,30 @@ client.on('messageCreate', message => {
 	const script = commands[command];
 	if (script !== undefined)
 		script.execute(message, args, client);
+});
+
+// boot reactionrole on startup
+const channels = require('./config/channels.json');
+const roles = require('./config/roles.json');
+client.on('messageReactionAdd', async (reaction, user) => {
+	if (reaction.message.partial) await reaction.message.fetch();
+	if (reaction.partial) await reaction.fetch();
+	if (user.bot) return;
+	if (!reaction.message.guild) return;
+	if (reaction.message.channel.id !== channels.roles) return;
+	for (const role in roles)
+		if (reaction.emoji.name === roles[role].emoji)
+			await reaction.message.guild.members.cache.get(user.id).roles.add(roles[role].id);
+});
+client.on('messageReactionRemove', async (reaction, user) => {
+	if (reaction.message.partial) await reaction.message.fetch();
+	if (reaction.partial) await reaction.fetch();
+	if (user.bot) return;
+	if (!reaction.message.guild) return;
+	if (reaction.message.channel.id !== channels.roles) return;
+	for (const role in roles)
+		if (reaction.emoji.name === roles[role].emoji)
+			await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[role].id);
 });
 
 const { token } = require('./config/token.json');
