@@ -1,9 +1,12 @@
 const { Client, Intents } = require('discord.js');
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+	],
+	partials: ["MESSAGE", "CHANNEL", "REACTION"]
 });
-
-const prefix = '!';
 
 // load command code
 const fs = require('fs');
@@ -19,6 +22,8 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', message => {
+	const prefix = '!';
+
 	if (!message.content.startsWith(prefix) || message.author.bot)
 		return;
 
@@ -26,8 +31,8 @@ client.on('messageCreate', message => {
 	const command = args.shift().toLowerCase();
 	const script = commands[command];
 	if (script !== undefined)
-		script.execute(message, args);
+		script.execute(message, args, client);
 });
 
-const { token } = require('./token.json');
+const { token } = require('./config/token.json');
 client.login(token);

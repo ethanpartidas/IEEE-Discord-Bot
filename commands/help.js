@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
 	name: 'help',
 	description: 'displays help menu',
@@ -5,12 +7,11 @@ module.exports = {
 	execute(message, args) {
 		const fs = require('fs');
 		const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-		let reply = 'Commands:\n';
+		let embed = new MessageEmbed().setTitle('Commands');
 		for (const file of commandFiles) {
 			const command = require(`./${file}`);
-			reply += '- ' + command.name + ': ' + command.description + '\n';
+			embed.addField(command.name, command.description);
 		}
-		message.channel.send(reply);
-		return;
+		message.channel.send({ embeds: [embed] });
 	}
 }
